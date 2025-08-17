@@ -1,4 +1,5 @@
-import { Sequelize, sequelize } from './db.js';
+import { Sequelize, sequelize } from '../config/db.js';
+
 
 const Produtos = sequelize.define('produto', {
    id:{

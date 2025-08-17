@@ -1,4 +1,4 @@
-import { Sequelize, sequelize } from './db.js';
+import { Sequelize, sequelize } from '../config/db.js';
 
 const Reserva = sequelize.define('reserva', {
   id: {

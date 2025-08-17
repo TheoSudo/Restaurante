@@ -1,6 +1,7 @@
 import express from 'express';
 import { engine } from 'express-handlebars';
 import bodyParser from 'body-parser';
+import { sequelize } from './config/database.js';
 import produtoRoutes from './routes/produtoRoutes.js';
 import faleConoscoRoutes from './routes/faleConoscoRoutes.js';
 import reservaRoutes from './routes/reservaRoutes.js';
@@ -26,6 +27,10 @@ app.get('/', (req, res) => {
 app.use('/produtos', produtoRoutes);
 app.use('/faleConosco', faleConoscoRoutes);
 app.use('/reserva', reservaRoutes);
+
+sequelize.authenticate()
+  .then(() => console.log('Conexão com o banco bem-sucedida!'))
+  .catch(err => console.error('Erro de conexão:', err));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -1,5 +1,5 @@
 import { Sequelize, sequelize } from '../config/db.js';
-
+import { DataTypes } from 'sequelize';
 
 const Reserva = sequelize.define('reserva', {
   id: {

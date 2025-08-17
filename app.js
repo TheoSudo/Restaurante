@@ -8,10 +8,7 @@ import reservaRoutes from './routes/reservaRoutes.js';
 
 const app = express();
 
-app.engine('handlebars', engine({
-    defaultLayout: 'main',
-    helpers: {}
-}));
+app.engine('handlebars', engine({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
@@ -19,20 +16,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.render('inicio', {
-        imagemURL: '/images/restaurante.jpg'
-    });
+  res.render('inicio', { imagemURL: '/images/restaurante.jpg' });
 });
-
 app.use('/produtos', produtoRoutes);
 app.use('/faleConosco', faleConoscoRoutes);
 app.use('/reserva', reservaRoutes);
 
-sequelize.authenticate()
-  .then(() => console.log('Conexão com o banco bem-sucedida!'))
-  .catch(err => console.error('Erro de conexão:', err));
+sequelize.sync({ alter: true })
+  .then(() => console.log('Tabelas sincronizadas com sucesso!'))
+  .catch(err => console.error('Erro ao sincronizar tabelas:', err));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server listening on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

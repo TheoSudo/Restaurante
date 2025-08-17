@@ -1,4 +1,4 @@
-import { Sequelize, sequelize } from '../config/db.js';
+import { Sequelize, sequelize } from '../db.js';
 
 
 const Produtos = sequelize.define('produto', {

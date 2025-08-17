@@ -1,7 +1,7 @@
 import express from 'express';
 import { engine } from 'express-handlebars';
 import bodyParser from 'body-parser';
-import { sequelize } from './config/db.js';
+import { sequelize } from './models/db.js';
 import produtoRoutes from './routes/produtoRoutes.js';
 import faleConoscoRoutes from './routes/faleConoscoRoutes.js';
 import reservaRoutes from './routes/reservaRoutes.js';

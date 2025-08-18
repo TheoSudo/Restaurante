@@ -5,8 +5,8 @@ Este é o repositório do projeto **Restaurante**, desenvolvido com **Node.js** 
 ---
 
 ## Participantes
-- Theo  
-- Vinicius  
+- Theo Sudo Barrence
+- Vinicius Neves Anderson
 
 ---
 

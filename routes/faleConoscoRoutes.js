@@ -1,13 +1,16 @@
 import express from 'express';
 import faleConoscoController from '../controllers/faleConoscoController.js';
+import { isAdmin, isUser } from '../middlewares/auth.js';
 
 const router = express.Router();
 
 router.get('/', faleConoscoController.listarMensagens);
-router.get('/new', faleConoscoController.showAddForm);
-router.post('/new', faleConoscoController.addMensagem);
-router.get('/edit/:id', faleConoscoController.showEditForm);
-router.post('/edit/:id', faleConoscoController.updateMensagem);
-router.post('/delete/:id', faleConoscoController.deleteMensagem);
+
+router.get('/new', isUser, faleConoscoController.showAddForm);
+router.post('/new', isUser, faleConoscoController.addMensagem);
+
+router.get('/edit/:id', isUser, faleConoscoController.showEditForm);
+router.post('/edit/:id', isUser, faleConoscoController.updateMensagem);
+router.post('/delete/:id', isAdmin, faleConoscoController.deleteMensagem);
 
 export default router;

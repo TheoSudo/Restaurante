@@ -1,0 +1,42 @@
+<h1 class="title">Reservas</h1>
+
+{{#if isAdmin}}
+  {{#if reservas.length}}
+    <div class="table-container reservas-table-container">
+      <table class="table reservas-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Data</th>
+            <th>Pessoas</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each reservas}}
+          <tr>
+            <td>{{nome}}</td>
+            <td>{{email}}</td>
+            <td>{{dataFormatada}}</td>
+            <td>{{pessoas}}</td>
+            <td>
+              <form action="/reserva/delete/{{id}}" method="POST" class="delete-form">
+                <button type="submit" class="button-delete" onclick="return confirm('Tem certeza?')">Excluir</button>
+              </form>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{else}}
+    <p class="no-reserva">Nenhuma reserva cadastrada.</p>
+  {{/if}}
+{{/if}}
+
+{{#if isUser}}
+  <div class="btn-container">
+    <a href="/reserva/new" class="button-save new-reserva btn-add">Fazer nova reserva</a>
+  </div>
+{{/if}}

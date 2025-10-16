@@ -3,23 +3,33 @@ import Reserva from '../models/reserva.js';
 const reservaController = {
   listarReservas: async (req, res) => {
     try {
-      const reservas = await Reserva.findAll({ order: [['id', 'ASC']] });
+      const isAdmin = req.session.user?.isAdmin || false;
+      const isUser = req.session.isLoggedIn && !isAdmin;
 
-      const reservasConvertidas = reservas.map(r => {
-        const data = new Date(r.data);
-        return {
-          ...r.toJSON(),
-          dataFormatada: data.toLocaleString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          })
-        };
+      let reservasConvertidas = [];
+
+      if (isAdmin) {
+        const reservas = await Reserva.findAll({ order: [['id', 'ASC']] });
+        reservasConvertidas = reservas.map(r => {
+          const data = new Date(r.data);
+          return {
+            ...r.toJSON(),
+            dataFormatada: data.toLocaleString('pt-BR', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            })
+          };
+        });
+      }
+
+      res.render('reserva', {
+        reservas: reservasConvertidas,
+        isAdmin,
+        isUser
       });
-
-      res.render('reserva', { reservas: reservasConvertidas });
     } catch (error) {
       console.error("Erro ao buscar reservas:", error);
       res.status(500).send('Erro ao buscar reservas: ' + error.message);
@@ -33,13 +43,7 @@ const reservaController = {
   addReserva: async (req, res) => {
     const { nome, email, data, pessoas } = req.body;
     try {
-      await Reserva.create({
-        nome,
-        email,
-        data,
-        pessoas
-      });
-
+      await Reserva.create({ nome, email, data, pessoas });
       res.redirect('/reserva');
     } catch (error) {
       console.error("Erro ao adicionar reserva:", error);

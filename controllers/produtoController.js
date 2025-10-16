@@ -1,30 +1,55 @@
-import Produtos from '../models/produto.js'; 
+// controllers/produtoController.js
+import Produto from '../models/produto.js'; 
 
 const produtoController = {
+    // ALTERAÇÃO AQUI: Usa .map(p => p.toJSON()) para garantir objetos planos
+    getProductsData: async () => {
+        const produtos = await Produto.findAll({ 
+            order: [['createdAt', 'DESC']],
+        });
+        // Retorna um array de objetos planos, 100% acessível pelo Handlebars
+        return produtos.map(p => p.toJSON()); 
+    },
+
+    // Rota GET /produtos: Lista todos os produtos (para gestão)
     listAllProducts: async (req, res) => {
         try {
-            const produtos = await Produtos.findAll({
-                order: [['createdAt', 'DESC']]
-            });
-            res.render('produtos', {
-                produtos: produtos.map(produto => produto.toJSON())
+            const produtos = await produtoController.getProductsData();
+            res.render('produtos', { 
+                produtos: produtos,
+                isAdmin: req.session.user ? req.session.user.isAdmin : false
             });
         } catch (error) {
             console.error("Error fetching products:", error);
             res.status(500).send('Erro ao buscar produtos: ' + error.message);
         }
+    }, 
+    
+    // Rota GET /pedidos/novo: Mostra o cardápio para o pedido
+    showMenuForOrder: async (req, res) => {
+        try {
+            const produtos = await produtoController.getProductsData();
+            // Renderiza 'pedidos' e envia a variável 'produtos'
+            res.render('pedidos', { 
+                produtos: produtos, 
+                isAdmin: req.session.user ? req.session.user.isAdmin : false
+            });
+        } catch (error) {
+            console.error("Erro ao carregar cardápio:", error);
+            res.status(500).render("erro", { mensagem: "Erro ao carregar cardápio." });
+        }
     },
 
+    // ... (o restante do CRUD permanece igual, pois ele já usava findByPk e toJSON ou redirect)
     showAddForm: (req, res) => {
         res.render('add_produto');
     },
 
     addNewProduct: async (req, res) => {
-        const { nome, descricao, preco } = req.body;
+        const { nome, preco } = req.body;
         try {
-            await Produtos.create({
+            await Produto.create({
                 nome: nome,
-                descricao: descricao,
                 preco: parseFloat(preco)
             });
             res.redirect('/produtos');
@@ -37,9 +62,8 @@ const produtoController = {
     showEditForm: async (req, res) => {
         try {
             const productId = req.params.id;
-            const produto = await Produtos.findByPk(productId);
+            const produto = await Produto.findByPk(productId);
             if (!produto) {
-                console.warn(`Produto com ID ${productId} não encontrado para edição.`);
                 res.status(404).send('Produto não encontrado.');
                 return;
             }
@@ -53,22 +77,14 @@ const produtoController = {
     updateProduct: async (req, res) => {
         try {
             const productId = req.params.id;
-            const { nome, descricao, preco } = req.body;
-            const [affectedRows] = await Produtos.update(
-                {
-                    nome: nome,
-                    descricao: descricao,
-                    preco: parseFloat(preco)
-                },
-                {
-                    where: { id: productId }
-                }
+            const { nome, preco } = req.body;
+            const [affectedRows] = await Produto.update(
+                { nome: nome, preco: parseFloat(preco).toFixed(2) },
+                { where: { id: productId } }
             );
             if (affectedRows === 0) {
-                console.warn(`Produto com ID ${productId} não encontrado ou não atualizado.`);
                 res.status(404).send('Produto não encontrado ou nenhum dado alterado.');
             } else {
-                console.log(`Produto com ID ${productId} atualizado com sucesso.`);
                 res.redirect('/produtos');
             }
         } catch (error) {
@@ -80,14 +96,10 @@ const produtoController = {
     deleteProduct: async (req, res) => {
         try {
             const productId = req.params.id;
-            const result = await Produtos.destroy({
-                where: { id: productId }
-            });
+            const result = await Produto.destroy({ where: { id: productId } });
             if (result === 0) {
-                console.warn(`Attempted to delete product with ID ${productId}, but it was not found.`);
                 res.status(404).send('Produto não encontrado.');
             } else {
-                console.log(`Produto com ID ${productId} deletado com sucesso.`);
                 res.redirect('/produtos');
             }
         } catch (error) {

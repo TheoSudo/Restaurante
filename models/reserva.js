@@ -1,32 +1,32 @@
-import { Sequelize, sequelize } from '../config/db.js';
 import { DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
 
-const Reserva = sequelize.define('reserva', {
+const Reserva = sequelize.define('Reserva', {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
   nome: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   email: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   data: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
     allowNull: false
   },
   pessoas: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false
   }
 });
 
 sequelize.sync({ force: false })
-  .then(() => console.log('Tabela reserva criada com sucesso!'))
-  .catch(err => console.error('Erro ao criar tabela reserva:', err));
+  .then(() => console.log('Tabela Reserva criada com sucesso!'))
+  .catch(err => console.error('Erro ao criar tabela Reserva:', err));
 
 export default Reserva;

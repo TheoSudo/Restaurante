@@ -1,0 +1,27 @@
+<div class="pedido-finalizado">
+  <h1>Pedido Finalizado!</h1>
+  <table cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Qtd</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each itens}}
+        <tr>
+          <td>{{produto.nome}}</td>
+          <td>{{quantidade}}</td>
+          <td>R$ {{subtotal}}</td>
+        </tr>
+      {{/each}}
+      <tr class="total-row">
+        <td colspan="2">Total</td>
+        <td>R$ {{total}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Total: R$ {{total}}</h2>
+  <a href="/pedidos/novo" class="button-voltar">Fazer Novo Pedido</a>
+</div>

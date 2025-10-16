@@ -1,0 +1,33 @@
+    <h1>Cardápio</h1>
+
+    {{#if isAdmin}}
+    <a href="/produtos/new" class="new-produto">Adicionar Produto</a>
+    {{/if}}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                {{#if isAdmin}}
+                <th>Ações</th>
+                {{/if}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each produtos}}
+            <tr>
+                <td>{{this.nome}}</td>
+                <td>R${{this.preco}}</td>
+                {{#if ../isAdmin}}
+                <td>
+                    <a href="/produtos/edit/{{this.id}}" class="button-edit">Editar</a>
+                    <form action="/produtos/delete/{{this.id}}" method="POST" class="delete-form">
+                        <button type="submit" class="button-delete">Excluir</button>
+                    </form>
+                </td>
+                {{/if}}
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>

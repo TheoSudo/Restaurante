@@ -1,0 +1,22 @@
+<h1>Editar Mensagem: {{mensagem.nome}}</h1>
+
+<form action="/faleConosco/edit/{{mensagem.id}}" method="POST" class="form-container form-sugestao">
+  <label for="nome">Nome:</label>
+  <input type="text" id="nome" name="nome" value="{{mensagem.nome}}" required>
+
+  <label for="data">Data:</label>
+  <input type="date" id="data" name="data" value="{{mensagem.data}}" required>
+
+  <label for="email">E-mail:</label>
+  <input type="email" id="email" name="email" value="{{mensagem.email}}" required>
+
+  <label for="mensagem">Mensagem:</label>
+  <textarea id="mensagem" name="mensagem" required rows="5">{{mensagem.mensagem}}</textarea>
+
+  <button type="submit" class="button-save">Salvar</button>
+  <a href="/faleConosco" class="button-cancel">Cancelar</a>
+</form>
+
+<p>
+  <a href="/faleConosco" class="button-voltar">Voltar para a lista de mensagens</a>
+</p>

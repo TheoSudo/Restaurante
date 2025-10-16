@@ -1,0 +1,33 @@
+<div class="pedidos-container">
+  <h1>Pedidos</h1>
+
+  {{#each pedidos}}
+    <div class="pedido-card">
+      <h2>Pedido #{{id}} | Total: R$ {{total}}</h2>
+
+      <table class="pedidos-list">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each itens}}
+            <tr>
+              <td>{{nome}}</td>
+              <td>{{quantidade}}</td>
+              <td>{{subtotal}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+
+      <form action="/pedidos/delete/{{id}}" method="POST" class="delete-form" onsubmit="return confirm('Tem certeza que quer excluir este pedido?')">
+        <button type="submit" class="button-delete" style="margin: 10px">Excluir Pedido</button>
+      </form>
+
+    </div>
+  {{/each}}
+</div>

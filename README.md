@@ -1,4 +1,4 @@
-# Projeto Restaurante
+# Web Dinâmico - Restaurante
 
 Este é o repositório do projeto **Restaurante**, desenvolvido com **Node.js** e utilizando a arquitetura **MVC (Model-View-Controller)**.
 
@@ -29,4 +29,5 @@ Certifique-se de ter instalado em sua máquina:
 2. **Clone o Repositório:**  
 Abra o terminal integrado no VS Code e rode:  
 ```bash
-git clone https://github.com/usuario/restaurante.git
+git clone https://github.com/TheoSudo/Web-Din-mico---Restaurante
+# Projeto-2-bim

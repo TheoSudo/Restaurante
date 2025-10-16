@@ -1,0 +1,27 @@
+<div class="pedidos-container">
+  <h1>Cardápio</h1>
+  <form action="/pedidos/novo" method="POST" class="cardapio-form">
+    <table cellpadding="8" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Selecionar</th>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Quantidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each produtos}}
+          <tr>
+            <td><input type="checkbox" name="produtosSelecionados" value="{{this.id}}"></td>
+            <td>{{this.nome}}</td>
+            <td>R$ {{this.preco}}</td>
+            <td><input type="number" name="quantidade_{{this.id}}" min="1" value="1"></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <button type="submit">Finalizar Pedido</button>
+  </form>
+  <a href="/" class="button-voltar">Voltar</a>
+</div>

@@ -1,0 +1,48 @@
+<h1>Lista de Mensagens</h1>
+
+{{#if mensagens}}
+<div class="table-container mensagens-table-container">
+  <table class="table mensagens-table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Data</th>
+        <th>E-mail</th>
+        <th>Mensagem</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each mensagens}}
+      <tr>
+        <td>{{nome}}</td>
+        <td>{{dataFormatada}}</td>
+        <td>{{email}}</td>
+        <td>{{mensagem}}</td>
+        {{#if ../isAdmin}}
+        <td>
+          <a href="/faleConosco/edit/{{id}}" class="button-edit">Editar</a>
+          <form action="/faleConosco/delete/{{id}}" method="POST" class="delete-form">
+            <button type="submit" class="button-delete" onclick="return confirm('Tem certeza?')">Excluir</button>
+          </form>
+        </td>
+        {{/if}}
+        {{#if ../isUser}}
+        <td>
+          <a href="/faleConosco/edit/{{id}}" class="button-edit">Editar</a>
+        </td>
+        {{/if}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+{{else}}
+<p class="sem-mensagem">Nenhuma mensagem recebida.</p>
+{{/if}}
+
+{{#if isUser}}
+<p>
+  <a href="/faleConosco/new" class="button-save new-message">Nova Mensagem</a>
+</p>
+{{/if}}

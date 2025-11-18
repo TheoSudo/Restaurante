@@ -6,7 +6,7 @@ Este é o repositório do projeto **Restaurante**, desenvolvido com **Node.js** 
 
 ## Participantes
 - Theo Sudo Barrence
-- Vinicius Neves Anderson
+- Vinicius Neves Anderson 
 
 ---
 
@@ -27,7 +27,9 @@ Certifique-se de ter instalado em sua máquina:
 1. **Abra o VS Code** (ou outro editor de sua preferência).  
 
 2. **Clone o Repositório:**  
-Abra o terminal integrado no VS Code e rode:  
+Abra o terminal integrado no VS Code e rode:
+
 ```bash
 git clone https://github.com/TheoSudo/Web-Din-mico---Restaurante
+
 # Projeto-2-bim
